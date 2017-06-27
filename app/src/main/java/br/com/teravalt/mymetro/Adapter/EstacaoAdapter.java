@@ -20,9 +20,11 @@ import br.com.teravalt.mymetro.R;
 public class EstacaoAdapter extends RecyclerView.Adapter<EstacaoAdapter.AndroidViewHolder> {
 
     private List<Estacao> linhas;
+    private OnItemClickListener listener;
 
-    public EstacaoAdapter(List<Estacao> a){
+    public EstacaoAdapter(List<Estacao> a, OnItemClickListener l){
         this.linhas = a;
+        this.listener = l;
     }
 
     @Override
@@ -33,10 +35,16 @@ public class EstacaoAdapter extends RecyclerView.Adapter<EstacaoAdapter.AndroidV
     }
 
     @Override
-    public void onBindViewHolder(AndroidViewHolder holder, int position) {
+    public void onBindViewHolder(AndroidViewHolder holder, final int position) {
         holder.tvNumero.setText(linhas.get(position).getNumero());
         holder.tvCor.setText(linhas.get(position).getCor());
 
+        holder.itemView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                listener.onItemClick(linhas.get(position));
+            }
+        });
 
         Picasso.with(holder.itemView.getContext())
                 .load(APIUtils.BASE_URL + linhas.get(position).getUrlImagem())

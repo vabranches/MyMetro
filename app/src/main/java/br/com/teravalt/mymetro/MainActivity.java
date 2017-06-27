@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.util.SortedList;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +14,7 @@ import java.util.List;
 import br.com.teravalt.mymetro.API.APIUtils;
 import br.com.teravalt.mymetro.API.EstacaoAPI;
 import br.com.teravalt.mymetro.Adapter.EstacaoAdapter;
+import br.com.teravalt.mymetro.Adapter.OnItemClickListener;
 import br.com.teravalt.mymetro.Model.Estacao;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,7 +32,12 @@ public class MainActivity extends AppCompatActivity {
 
         rvEstacoes = (RecyclerView) findViewById(R.id.rvEstacoes);
 
-        estacaoAdapter = new EstacaoAdapter(new ArrayList<Estacao>());
+        estacaoAdapter = new EstacaoAdapter(new ArrayList<Estacao>(), new OnItemClickListener() {
+            @Override
+            public void onItemClick(Estacao item) {
+                Toast.makeText(getApplicationContext(),item.getCor(),Toast.LENGTH_SHORT).show();
+            }
+        });
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         rvEstacoes.setLayoutManager(layoutManager);
         rvEstacoes.setAdapter(estacaoAdapter);
