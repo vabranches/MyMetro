@@ -36,9 +36,10 @@ public class MainActivity extends AppCompatActivity {
         estacaoAdapter = new EstacaoAdapter(new ArrayList<Estacao>(),
                 new OnItemClickListener() {
             @Override
-            public void onItemClick(Estacao item) {
+            public void onItemClick(Estacao linha) {
 
                 Intent telaMapa = new Intent(MainActivity.this,MapaActivity.class);
+                telaMapa.putExtra("LINHA", linha);
                 startActivity(telaMapa);
 
             }
